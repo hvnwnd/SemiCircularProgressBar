@@ -259,21 +259,18 @@ open class CircularSlider: UIControl {
         
         // 0... 100
         let valuesInterval = Interval(min: minimumValue, max: maximumValue)
-        // get end angle from end value
-//        let endAngle = CircularSliderHelper.scaleToAngle(value: endPointValue, inInterval: valuesInterval) + CircularSliderHelper.circleInitialAngle
-        
-//        drawFilledArc(fromAngle: -.pi, toAngle: CircularSliderHelper.circleInitialAngle, inContext: context)
+
         let endAngle =
         CircularSliderHelper.scaleToAngle(value: endPointValue,
                                           inInterval: valuesInterval)
-        + CircularSliderHelper.circleMinValue
-        drawFilledArc(fromAngle: -.pi, toAngle: CircularSliderHelper.circleInitialAngle, inContext: context)
+
+        drawFilledArc(fromAngle: CircularSliderHelper.circleInitialAngle, toAngle: endAngle, inContext: context)
         
         // draw end thumb
         endThumbTintColor.setFill()
         (isHighlighted == true) ? endThumbStrokeHighlightedColor.setStroke() : endThumbStrokeColor.setStroke()
         
-//        drawThumbAt(endAngle, with: endThumbImage, inContext: context)
+        drawThumbAt(endAngle, with: endThumbImage, inContext: context)
     }
     
     // MARK: User interaction methods
@@ -292,10 +289,9 @@ open class CircularSlider: UIControl {
      */
     override open func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         // the position of the pan gesture
-        let touchPosition = touch.location(in: self)
+        let touchPosition = touch.location(in: self) // x (0, 100), y (0, 100)
         let startPoint = CGPoint(x: 0, y: bounds.center.y)
         
-        print("touch: \(touchPosition), start: \(startPoint)")
         let value = newValue(from: endPointValue, touch: touchPosition, start: startPoint)
         
         endPointValue = value
@@ -313,14 +309,15 @@ open class CircularSlider: UIControl {
 
     // MARK: Utilities methods
     internal func newValue(from oldValue: CGFloat, touch touchPosition: CGPoint, start startPosition: CGPoint) -> CGFloat {
-        let angle = CircularSliderHelper.angle(betweenFirstPoint: startPosition, secondPoint: touchPosition, inCircleWithCenter: bounds.center)
-        
-        print("angle \(angle)")
+        var angle = CircularSliderHelper.angle(betweenFirstPoint: startPosition, secondPoint: touchPosition, inCircleWithCenter: bounds.center)
         let interval = Interval(min: minimumValue, max: maximumValue)
-        let deltaValue = CircularSliderHelper.delta(in: interval, for: angle, oldValue: oldValue)
         
-        let newValue = oldValue + deltaValue - minimumValue
+        let deltaValue = CircularSliderHelper.delta(in: interval, for: angle, oldValue: oldValue)
+        var newValue = oldValue + deltaValue - minimumValue
+        newValue = newValue > maximumValue ? newValue - maximumValue : newValue
 
         return newValue
     }
+    
 }
+
