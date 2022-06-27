@@ -215,7 +215,6 @@ open class CircularSlider: UIControl {
         }
     }
     
-    ///  See superclass documentation
     override open var isHighlighted: Bool {
         didSet {
             setNeedsDisplay()
@@ -223,29 +222,21 @@ open class CircularSlider: UIControl {
     }
     
     // MARK: init methods
-    
-    /**
-     See superclass documentation
-     */
+
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
         setup()
     }
     
-    /**
-     See superclass documentation
-     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         setup()
     }
     
     internal func setup() {
         trackFillColor = tintColor
     }
-
 
     // MARK: Drawing methods
     
@@ -257,7 +248,6 @@ open class CircularSlider: UIControl {
         
         drawCircularSlider(inContext: context)
         
-        // 0... 100
         let valuesInterval = Interval(min: minimumValue, max: maximumValue)
 
         let endAngle =
@@ -309,7 +299,7 @@ open class CircularSlider: UIControl {
 
     // MARK: Utilities methods
     internal func newValue(from oldValue: CGFloat, touch touchPosition: CGPoint, start startPosition: CGPoint) -> CGFloat {
-        var angle = CircularSliderHelper.angle(betweenFirstPoint: startPosition, secondPoint: touchPosition, inCircleWithCenter: bounds.center)
+        let angle = CircularSliderHelper.angle(betweenFirstPoint: startPosition, secondPoint: touchPosition, inCircleWithCenter: bounds.center)
         let interval = Interval(min: minimumValue, max: maximumValue)
         
         let deltaValue = CircularSliderHelper.delta(in: interval, for: angle, oldValue: oldValue)

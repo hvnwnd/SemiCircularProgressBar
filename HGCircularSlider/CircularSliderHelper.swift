@@ -235,7 +235,7 @@ internal class CircularSliderHelper {
         let angleIntreval = Interval(min: circleMinValue, max: circleMaxValue)
         
         let oldAngle = scaleToAngle(value: oldValue, inInterval: interval)
-        let deltaAngle = angle - oldAngle// self.angle(from: oldAngle, to: angle)
+        let deltaAngle = angle - oldAngle
 
         return scaleValue(deltaAngle, fromInterval: angleIntreval, toInterval: interval)
     }
