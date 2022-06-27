@@ -239,10 +239,7 @@ open class CircularSlider: UIControl {
     }
 
     // MARK: Drawing methods
-    
-    /**
-     See superclass documentation
-     */
+
     override open func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
         
@@ -265,18 +262,11 @@ open class CircularSlider: UIControl {
     
     // MARK: User interaction methods
     
-    /**
-     See superclass documentation
-     */
     override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         sendActions(for: .editingDidBegin)
-        
         return true
     }
     
-    /**
-     See superclass documentation
-     */
     override open func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         // the position of the pan gesture
         let touchPosition = touch.location(in: self) // x (0, 100), y (0, 100)
@@ -290,14 +280,12 @@ open class CircularSlider: UIControl {
         return true
     }
     
-    /**
-     See superclass documentation
-     */
     open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         sendActions(for: .editingDidEnd)
     }
 
     // MARK: Utilities methods
+    
     internal func newValue(from oldValue: CGFloat, touch touchPosition: CGPoint, start startPosition: CGPoint) -> CGFloat {
         let angle = CircularSliderHelper.angle(betweenFirstPoint: startPosition, secondPoint: touchPosition, inCircleWithCenter: bounds.center)
         let interval = Interval(min: minimumValue, max: maximumValue)
@@ -308,6 +296,5 @@ open class CircularSlider: UIControl {
 
         return newValue
     }
-    
 }
 
