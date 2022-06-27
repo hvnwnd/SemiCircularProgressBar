@@ -12,7 +12,6 @@ import Foundation
 class CircularSliderViewController: UIViewController {
 
     @IBOutlet weak var circularSlider: CircularSlider!
-    @IBOutlet weak var roundsLabel: UILabel!
     @IBOutlet weak var maxValueLabel: UILabel!
     @IBOutlet weak var minValueLabel: UILabel!
     @IBOutlet weak var currentValueLabel: UILabel!
@@ -21,41 +20,15 @@ class CircularSliderViewController: UIViewController {
         super.viewDidLoad()
         circularSlider.minimumValue = 0
         circularSlider.maximumValue = 100
-        circularSlider.endPointValue = 5
-        if #available(iOS 13.0, *) {
-            circularSlider.endThumbImage = UIImage(systemName: "doc.append")
-        } else {
-            // Fallback on earlier versions
-        }
+        circularSlider.endPointValue = 25
+        circularSlider.endThumbImage = UIImage(systemName: "doc.append")
         updateTexts()
         circularSlider.addTarget(self, action: #selector(updateTexts), for: .valueChanged)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @objc func updateTexts() {
-        let value = circularSlider.endPointValue
-        let ok = (circularSlider.maximumValue  / CGFloat(circularSlider.numberOfRounds))
-        let ff = ceil(value / ok)
-        
         maxValueLabel.text = String(format: "%.0f", circularSlider.maximumValue)
         minValueLabel.text = String(format: "%.0f", circularSlider.minimumValue)
-        
-        currentValueLabel.text = String(format: "%.0f", value)
-        roundsLabel.text = "Round N° " +  String(format: "%.0f", ff)
+        currentValueLabel.text = String(format: "%.0f", circularSlider.endPointValue)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
