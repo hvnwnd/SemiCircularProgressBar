@@ -111,7 +111,11 @@ extension CircularSlider {
         let thumbOrigin = CircularSliderHelper.endPoint(fromCircle: circle, angle: angle)
         
         if let image = image {
-            return drawThumb(withImage: image, thumbOrigin: thumbOrigin, inContext: context)
+            return drawThumb(withImage: image,
+                             thumbOrigin: thumbOrigin,
+                             center: bounds.center,
+                             angle: angle,
+                             inContext: context)
         }
         
         // Draw a disk as thumb
@@ -132,14 +136,104 @@ extension CircularSlider {
      - returns: return the origin point of the thumb
      */
     @discardableResult
-    private func drawThumb(withImage image: UIImage, thumbOrigin: CGPoint, inContext context: CGContext) -> CGPoint {
+    private func drawThumb(withImage image: UIImage, thumbOrigin: CGPoint, center: CGPoint, angle: CGFloat, inContext context: CGContext) -> CGPoint {
         UIGraphicsPushContext(context)
         context.beginPath()
         let imageSize = image.size
-        let imageFrame = CGRect(x: thumbOrigin.x - (imageSize.width / 2), y: thumbOrigin.y - (imageSize.height / 2), width: imageSize.width, height: imageSize.height)
-        image.draw(in: imageFrame)
+        let imageFrame = CGRect(x: thumbOrigin.x - (imageSize.width / 2),
+                                y: thumbOrigin.y - (imageSize.height / 2),
+                                width: imageSize.width,
+                                height: imageSize.height)
+        
+        let renderer = UIGraphicsImageRenderer(size: imageSize)
+        
+
+        let img = renderer.image { ctx in
+            ctx.cgContext.setFillColor(UIColor.yellow.cgColor)
+            
+//            ctx.fill(CGRect(x: 1, y: 1, width: 30, height: 30))
+            
+            image.draw(in: imageFrame)
+//            ctx.cgContext.rotate(by: angle + .pi / 2)
+            // awesome drawing code
+        }
+
+//        let newImage = renderer.image { (context) in
+//            context.stroke(renderer.format.bounds)
+//            context.fill(CGRect(x: 1, y: 1, width: 140, height: 140))
+//        }
+
+//        context.translateBy(x: center.x / 2, y: center.y)
+////
+//        context.rotate(by: angle + .pi / 2)
+////
+//        context.translateBy(x: imageFrame.size.width * -0.5, y: imageFrame.size.height * -0.5)
+
+//        image.draw(at: thumbOrigin)
+        img.draw(in: imageFrame)
+        
         UIGraphicsPopContext()
 
         return thumbOrigin
     }
+    
+//    -(UIImage*)rotateImage:(UIImage*)img forAngle:(CGFloat)radian   {
+//
+//        UIView *rotatedViewBox = [[UIView alloc]initWithFrame:CGRectMake(0, 0, img.size.width, img.size.height)];
+//        CGAffineTransform t = CGAffineTransformMakeRotation(radian);
+//        rotatedViewBox.transform = t;
+//        CGSize rotatedSize = rotatedViewBox.frame.size;
+//
+//        UIGraphicsBeginImageContext(rotatedSize);
+//
+//        CGContextRef context = UIGraphicsGetCurrentContext();
+//        CGContextTranslateCTM(context, rotatedSize.width, rotatedSize.height);
+//        CGContextRotateCTM(context, radian);
+//        CGContextScaleCTM(context, 1.0, -1.0);
+//
+//        CGContextDrawImage(context, CGRectMake(-img.size.width, -img.size.height, img.size.width, img.size.height), img.CGImage);
+//        UIImage *returnImg = UIGraphicsGetImageFromCurrentImageContext();
+//
+//        UIGraphicsEndImageContext();
+//        return returnImg;
+//    }
+
+}
+
+extension UIImage {
+    func putImage(image: UIImage, on rect: CGRect, angle: CGFloat = 0.0) -> UIImage{
+
+        let drawRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(drawRect.size, false, 1.0)
+
+        // Start drawing self
+        self.draw(in: drawRect)
+
+        // Drawing new image on top
+        let context = UIGraphicsGetCurrentContext()!
+
+        // Get the center of new image
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+
+        // Set center of image as context action point, so rotation works right
+        context.translateBy(x: center.x, y: center.y)
+        context.saveGState()
+
+        // Rotate the context
+        context.rotate(by: angle)
+
+        // Context origin is image's center. So should draw image on point on origin
+        image.draw(in: CGRect(origin: CGPoint(x: -rect.size.width/2, y: -rect.size.height/2), size: rect.size), blendMode: .normal, alpha:
+1.0)
+
+        // Go back to context original state.
+        context.restoreGState()
+
+        // Get new image
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        return newImage
+    }
+
 }

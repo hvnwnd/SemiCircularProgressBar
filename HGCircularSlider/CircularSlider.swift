@@ -204,7 +204,7 @@ open class CircularSlider: UIControl {
     internal var radius: CGFloat {
         get {
             // the minimum between the height/2 and the width/2
-            var radius =  min(bounds.center.x, bounds.center.y)
+            var radius =  min(bounds.center.x, bounds.height)
             
             // if we use an image for the thumb, the radius of the image will be used
             let maxThumbRadius = max(thumbRadius, (self.endThumbImage?.size.height ?? 0) / 2)
@@ -214,6 +214,8 @@ open class CircularSlider: UIControl {
             return radius
         }
     }
+    
+    var thumbView: UIImageView!
     
     override open var isHighlighted: Bool {
         didSet {
@@ -236,6 +238,15 @@ open class CircularSlider: UIControl {
     
     internal func setup() {
         trackFillColor = tintColor
+        
+        addThumb()
+    }
+    
+    func addThumb() {
+        let image = UIImage(named: "rounded-rectangle")
+        let imageView = UIImageView(image: image)
+        addSubview(imageView)
+        thumbView = imageView
     }
 
     // MARK: Drawing methods
@@ -257,7 +268,15 @@ open class CircularSlider: UIControl {
         endThumbTintColor.setFill()
         (isHighlighted == true) ? endThumbStrokeHighlightedColor.setStroke() : endThumbStrokeColor.setStroke()
         
-        drawThumbAt(endAngle, with: endThumbImage, inContext: context)
+        updateThumb(endAngle: endAngle)
+//        drawThumbAt(endAngle, with: endThumbImage, inContext: context)
+    }
+    
+    func updateThumb(endAngle: CGFloat) {
+        let circle = Circle(origin: bounds.center, radius: self.radius)
+        let endPoint = CircularSliderHelper.endPoint(fromCircle: circle, angle: endAngle)
+        thumbView.center = endPoint
+        thumbView.transform = CGAffineTransform(rotationAngle: endAngle + .pi / 2)
     }
     
     // MARK: User interaction methods
@@ -270,7 +289,7 @@ open class CircularSlider: UIControl {
     override open func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         // the position of the pan gesture
         let touchPosition = touch.location(in: self) // x (0, 100), y (0, 100)
-        let startPoint = CGPoint(x: 0, y: bounds.center.y)
+        let startPoint = CGPoint(x: 0, y: bounds.height)
         
         let value = newValue(from: endPointValue, touch: touchPosition, start: startPoint)
         

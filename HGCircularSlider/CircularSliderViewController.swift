@@ -22,7 +22,7 @@ class CircularSliderViewController: UIViewController, UITextFieldDelegate {
         circularSlider.minimumValue = 0
         circularSlider.maximumValue = 100
         circularSlider.endPointValue = 25
-        circularSlider.endThumbImage = UIImage(systemName: "target")
+        circularSlider.endThumbImage = UIImage(named: "rounded-rectangle") // UIImage(systemName: "target")
         updateTexts()
         circularSlider.addTarget(self, action: #selector(updateTexts), for: .valueChanged)
     }
