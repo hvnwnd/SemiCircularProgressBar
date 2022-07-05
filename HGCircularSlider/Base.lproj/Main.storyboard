@@ -151,7 +151,7 @@
                                 </connections>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="0.047058823529411764" green="0.062745098039215685" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="KXq-jq-I0O" firstAttribute="top" secondItem="0zL-f3-x42" secondAttribute="bottom" constant="10" id="8wl-ME-jX4"/>
                             <constraint firstItem="0zL-f3-x42" firstAttribute="centerY" secondItem="KW8-2q-ueG" secondAttribute="centerY" constant="-150" id="Gbk-P7-1Fg"/>

@@ -31,7 +31,7 @@ class CircularSliderViewController: UIViewController, UITextFieldDelegate {
         maxValueLabel.text = String(format: "%.0f", circularSlider.maximumValue)
         minValueLabel.text = String(format: "%.0f", circularSlider.minimumValue)
         
-        let newValue = Int(circularSlider.endPointValue / 5)
+        let newValue = Int(round(circularSlider.endPointValue / 5))
         currentValueLabel.text = String(format: "%.0f", CGFloat(newValue) * 5)
     }
     

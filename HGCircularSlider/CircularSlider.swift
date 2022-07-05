@@ -245,6 +245,11 @@ open class CircularSlider: UIControl {
     func addThumb() {
         let image = UIImage(named: "rounded-rectangle")
         let imageView = UIImageView(image: image)
+        imageView.clipsToBounds = false
+        imageView.layer.shadowColor = UIColor.black.cgColor
+        imageView.layer.shadowOpacity = 0.3
+        imageView.layer.shadowOffset = CGSize.zero
+        imageView.layer.shadowRadius = 5
         addSubview(imageView)
         thumbView = imageView
     }
