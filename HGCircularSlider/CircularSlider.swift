@@ -291,10 +291,11 @@ open class CircularSlider: UIControl {
         let touchPosition = touch.location(in: self) // x (0, 100), y (0, 100)
         let startPoint = CGPoint(x: 0, y: bounds.height)
         
-        let value = newValue(from: endPointValue, touch: touchPosition, start: startPoint)
-        
-        endPointValue = value
-        sendActions(for: .valueChanged)
+        if touchPosition.x <= bounds.maxX && touchPosition.y <= bounds.maxY {
+            let value = newValue(from: endPointValue, touch: touchPosition, start: startPoint)
+            endPointValue = value
+            sendActions(for: .valueChanged)
+        }
         
         return true
     }
@@ -311,6 +312,7 @@ open class CircularSlider: UIControl {
         
         let deltaValue = CircularSliderHelper.delta(in: interval, for: angle, oldValue: oldValue)
         var newValue = oldValue + deltaValue - minimumValue
+        
         newValue = newValue > maximumValue ? newValue - maximumValue : newValue
 
         return newValue
