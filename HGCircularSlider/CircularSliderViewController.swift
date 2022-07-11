@@ -15,7 +15,6 @@ class CircularSliderViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var maxValueLabel: UILabel!
     @IBOutlet weak var minValueLabel: UILabel!
     @IBOutlet weak var currentValueLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()

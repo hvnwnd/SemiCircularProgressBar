@@ -99,8 +99,8 @@ internal extension CGRect {
 internal class CircularSliderHelper {
     
     @nonobjc static let circleMinValue: CGFloat = -.pi
-    @nonobjc static let circleMaxValue: CGFloat = 0//CGFloat(Double.pi)
-    @nonobjc static let circleInitialAngle: CGFloat = -.pi // * 7 / 8// -CGFloat(Double.pi / 2)
+    @nonobjc static let circleMaxValue: CGFloat = 0
+    @nonobjc static let circleInitialAngle: CGFloat = -.pi
     
     /**
      Convert angle from radians to degrees
@@ -115,7 +115,7 @@ internal class CircularSliderHelper {
     
     /**
      Returns the angle AÔB of an circle
-      算两点角度差
+      
      - parameter firstPoint:  the first point
      - parameter secondPoint: the second point
      - parameter center:      the center of the circle
@@ -142,7 +142,7 @@ internal class CircularSliderHelper {
     
     /**
      Given a specific angle, returns the coordinates of the end point in the circle
-        DRAW THUMB
+
      - parameter circle: the circle
      - parameter angle:  the angle value
      
@@ -229,7 +229,6 @@ internal class CircularSliderHelper {
         
         return value
     }
-    
     
     internal static func delta(in interval: Interval, for angle: CGFloat, oldValue: CGFloat) -> CGFloat {
         let angleIntreval = Interval(min: circleMinValue, max: circleMaxValue)

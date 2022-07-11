@@ -93,9 +93,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				3EC27E511EA546F700631582 /* CircularSliderViewController.swift */,
-				FCED431E28651789006D6158 /* CircularSlider.swift */,
-				FCED431F28651789006D6158 /* CircularSlider+Draw.swift */,
-				FCED432028651789006D6158 /* CircularSliderHelper.swift */,
+				FC347B58287497CA00BDD76C /* SemicircularSlider */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -140,6 +138,16 @@
 				E7D1A678D25EC3365B800DB3 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		FC347B58287497CA00BDD76C /* SemicircularSlider */ = {
+			isa = PBXGroup;
+			children = (
+				FCED431E28651789006D6158 /* CircularSlider.swift */,
+				FCED431F28651789006D6158 /* CircularSlider+Draw.swift */,
+				FCED432028651789006D6158 /* CircularSliderHelper.swift */,
+			);
+			name = SemicircularSlider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

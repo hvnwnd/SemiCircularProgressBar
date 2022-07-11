@@ -215,7 +215,7 @@ open class CircularSlider: UIControl {
         }
     }
     
-    var thumbView: UIImageView!
+    internal var thumbView: UIImageView!
     
     override open var isHighlighted: Bool {
         didSet {
@@ -227,7 +227,6 @@ open class CircularSlider: UIControl {
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        
         setup()
     }
     
@@ -238,18 +237,12 @@ open class CircularSlider: UIControl {
     
     internal func setup() {
         trackFillColor = tintColor
-        
         addThumb()
     }
     
     func addThumb() {
         let image = UIImage(named: "rounded-rectangle")
         let imageView = UIImageView(image: image)
-        imageView.clipsToBounds = false
-        imageView.layer.shadowColor = UIColor.black.cgColor
-        imageView.layer.shadowOpacity = 0.3
-        imageView.layer.shadowOffset = CGSize.zero
-        imageView.layer.shadowRadius = 5
         addSubview(imageView)
         thumbView = imageView
     }
@@ -258,7 +251,7 @@ open class CircularSlider: UIControl {
 
     override open func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
-        
+
         drawCircularSlider(inContext: context)
         
         let valuesInterval = Interval(min: minimumValue, max: maximumValue)
@@ -274,7 +267,6 @@ open class CircularSlider: UIControl {
         (isHighlighted == true) ? endThumbStrokeHighlightedColor.setStroke() : endThumbStrokeColor.setStroke()
         
         updateThumb(endAngle: endAngle)
-//        drawThumbAt(endAngle, with: endThumbImage, inContext: context)
     }
     
     func updateThumb(endAngle: CGFloat) {
